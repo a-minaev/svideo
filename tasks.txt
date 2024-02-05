@@ -1,0 +1,7 @@
+instantiate app > express, PORT, listening
+set routes > define classes > define response and input
+store info > movie object > add to movie list
+add middleware function
+
+define database > build database 
+mount to app > set query calls 
