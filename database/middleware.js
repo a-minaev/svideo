@@ -65,9 +65,13 @@ returnMovies(20, 20, 20);
 const returnMovie = (req, res, next) => {
     const title = checkTitle();
     if(checkTitle(req.body.title)) { //Verify that movie title is passed in req body
-        const returnMovie = getMovieDetails(req.body.title);
+        const returnMovie = parseListByTitle(req.body.title);
         res.status(200).send(returnMovie);
     }
+}
+
+const returnMovieByID = (req, res, next) => {
+    res.send(200).send(movieList[req.id]);
 }
 
 //POST Middleware
@@ -78,31 +82,44 @@ const returnMovie = (req, res, next) => {
 
 
 //Helpers
-const checkTitle = (title) => {
+const checkTitle = (req, res, next) => {
     console.log('!!Running checkTitle()!!');
     var validTitle = false;
-    const movieIsInList = movieList.forEach((movie) => {if(movie.title == title) {
+    const movieIsInList = movieList.forEach((movie) => {if(movie.title == req.query.title) {
         validTitle = true; 
     }});
     if(validTitle){
-        return validTitle;
+        next();
 
     } else {
-        throw error = new Error('Not a valid Title');
+        const error = new Error(`${req.query.title} is not a valid Title`);
+        next(error);
     }
 };
 
-const getMovieID = (title) => {
-    
+const checkID = (req, res, next) => {
+    if(movieList[req.id]){
+        next();
+    } else {
+        const error = new Error('Provided ID is not in list');
+        next(error);
+    }
 }
-const getMovieDetails = (title) => {
-    const returnMovie = movieList.forEach((movie) => {
+
+
+const parseListByTitle = (title) => {
+    var returnMovie = {};
+
+    movieList.forEach((movie) => {
         if(movie.title == title) {
-            return movie;
+            returnMovie = movie;
         }
     })
     return returnMovie;
 };
 
 
+
+
 console.log(checkTitle('Killers of the Flower Moon'));
+console.log(checkTitle('TMNT'));
