@@ -1,13 +1,13 @@
 const express = require('express');
 const database = express.Router();
-import {
+const {
     returnMovies, 
     returnMovieByTitle,
     returnMovieByID,
     checkTitle,
     checkID,
     addMovie
-} from ('./middleware');
+} = require('./middleware');
 
 database.param('id', (req, res, next, id) => {
     const movieID = id;
