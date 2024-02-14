@@ -1,5 +1,12 @@
 const express = require('express');
 const database = express.Router();
+import {
+    returnMovies, 
+    returnMovieByTitle,
+    returnMovieByID,
+    checkTitle,
+    checkID
+} from ('./middleware');
 
 database.param('id', (req, res, next, id) => {
     const movieID = id;
@@ -11,15 +18,15 @@ database.param('id', (req, res, next, id) => {
 })
 
 
-database.get('/movies', (req, res, next) => { //will use returnMovies
+database.get('/movies', returnMovies, (req, res, next) => { //will use returnMovies
     res.status(200).send('Movie List is in development, check back soon!');
 })
 
-database.get('/movie/:id', (req, res, next) => {
+database.get('/movie/:id', checkID, returnMovieByID, (req, res, next) => {
     res.status(200).send(`Sorry, we're having trouble locating the current title`);
 })
 
-database.get('/find', (req, res, next) => { //will be used to handle query params
+database.get('/find', checkTitle, returnMovieByTitle, (req, res, next) => { //will be used to handle query params
     res.status(200).send(`We'll find some movies for ya`);
 })
 
