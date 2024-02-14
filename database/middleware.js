@@ -62,12 +62,9 @@ const returnMovies = (req, res, next) => {
 }
 
 returnMovies(20, 20, 20);
-const returnMovie = (req, res, next) => {
-    const title = checkTitle();
-    if(checkTitle(req.body.title)) { //Verify that movie title is passed in req body
-        const returnMovie = parseListByTitle(req.body.title);
-        res.status(200).send(returnMovie);
-    }
+const returnMovieByTitle = (req, res, next) => {
+    const returnMovie = parseListByTitle(req.body.title);
+    res.status(200).send(returnMovie);
 }
 
 const returnMovieByID = (req, res, next) => {
@@ -121,5 +118,15 @@ const parseListByTitle = (title) => {
 
 
 
+/*
 console.log(checkTitle('Killers of the Flower Moon'));
 console.log(checkTitle('TMNT'));
+*/
+
+module.exports = {
+    returnMovies, 
+    returnMovieByTitle,
+    returnMovieByID,
+    checkTitle,
+    checkID
+};
