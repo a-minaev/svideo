@@ -72,7 +72,16 @@ const returnMovieByID = (req, res, next) => {
 }
 
 //POST Middleware
-
+const addMovie = (req,res,next) => {
+    if(req.body.title && req.body.director && req.body.year) {
+        const movie = new Movie(req.body.title, req.body.director, req.body.year);
+        addToList(movie);
+        res.status(201).send(`The film ${req.body.title} has been posted`);
+    } else {
+        const error = new Error('Not all needed fields are specified');
+        next(error);
+    }
+}
 
 
 //PUT Middleware
@@ -128,5 +137,6 @@ module.exports = {
     returnMovieByTitle,
     returnMovieByID,
     checkTitle,
-    checkID
+    checkID,
+    addMovie
 };

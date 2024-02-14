@@ -5,7 +5,8 @@ import {
     returnMovieByTitle,
     returnMovieByID,
     checkTitle,
-    checkID
+    checkID,
+    addMovie
 } from ('./middleware');
 
 database.param('id', (req, res, next, id) => {
@@ -30,7 +31,7 @@ database.get('/find', checkTitle, returnMovieByTitle, (req, res, next) => { //wi
     res.status(200).send(`We'll find some movies for ya`);
 })
 
-database.post('/movie', (req, res, next) => {
+database.post('/movie', addMovie, (req, res, next) => {
     res.status(201).send('Posted!');
 })
 
