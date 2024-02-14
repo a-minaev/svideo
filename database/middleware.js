@@ -73,6 +73,7 @@ const returnMovieByID = (req, res, next) => {
 
 //POST Middleware
 const addMovie = (req,res,next) => {
+    console.log(req.body.title);
     if(req.body.title && req.body.director && req.body.year) {
         const movie = new Movie(req.body.title, req.body.director, req.body.year);
         addToList(movie);
