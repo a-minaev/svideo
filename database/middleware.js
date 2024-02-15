@@ -59,8 +59,8 @@ const returnMovies = (req, res, next) => {
     const movieTitles = [];
     movieList.forEach((movie) => movieTitles.push(movie.title));
     console.log(movieTitles);
+    res.status(200).send(movieTitles);
 }
-
 returnMovies(20, 20, 20);
 const returnMovieByTitle = (req, res, next) => {
     const returnMovie = parseListByTitle(req.body.title);
