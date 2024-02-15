@@ -68,7 +68,7 @@ const returnMovieByTitle = (req, res, next) => {
 }
 
 const returnMovieByID = (req, res, next) => {
-    res.send(200).send(movieList[req.id]);
+    res.status(200).send(movieList[req.id]);
 }
 
 //POST Middleware
