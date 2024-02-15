@@ -13,7 +13,7 @@ database.param('id', (req, res, next, id) => {
     const movieID = id;
     // check for id in list
 
-    req.movieID = movieID;
+    req.id = movieID;
     next();
 
 })
