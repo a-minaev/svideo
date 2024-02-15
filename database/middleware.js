@@ -59,7 +59,7 @@ const returnMovies = (req, res, next) => {
     const movieTitles = [];
     movieList.forEach((movie) => movieTitles.push(movie.title));
     console.log(movieTitles);
-    res.status(200).send(movieTitles);
+    //res.status(200).send(movieTitles);
 }
 returnMovies(20, 20, 20);
 const returnMovieByTitle = (req, res, next) => {
@@ -105,6 +105,7 @@ const checkTitle = (req, res, next) => {
 };
 
 const checkID = (req, res, next) => {
+    console.log(movieList[req.id])
     if(movieList[req.id]){
         next();
     } else {
