@@ -117,7 +117,7 @@ const checkID = (req, res, next) => {
 const checkQueryParams = (req, res, next) => {
     console.log(req.query.title);
     switch(true){
-        case req.query.title && req.query.director && req.query.year:
+        case (req.query.title && req.query.director && req.query.year):
             console.log(`The following query params were specified: ${req.query.title}, ${req.query.director}, and ${req.query.year}`);
             break;
         case !req.query.title && !req.query.year:
@@ -126,7 +126,7 @@ const checkQueryParams = (req, res, next) => {
         case !req.query.title && !req.query.director:
             console.log(`Fetching movies released in ${req.query.year}`);
             break;
-        case req.query.title:
+        case (typeof req.query.title == "string"):
             console.log(`Fetching movies containing by ${req.query.title}`);
             break;
         default:
