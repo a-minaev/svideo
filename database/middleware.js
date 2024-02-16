@@ -115,6 +115,7 @@ const checkID = (req, res, next) => {
 }
 
 const checkQueryParams = (req, res, next) => {
+    console.log(req.query.title);
     switch(true){
         case req.query.title && req.query.director && req.query.year:
             console.log(`The following query params were specified: ${req.query.title}, ${req.query.director}, and ${req.query.year}`);
