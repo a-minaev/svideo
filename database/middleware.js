@@ -126,6 +126,9 @@ const checkQueryParams = (req, res, next) => {
         case !req.query.title && !req.query.director:
             console.log(`Fetching movies released in ${req.query.year}`);
             break;
+        case !req.query.title:
+            console.log(`Fetching movies by ${req.query.director} released in ${req.query.year}`);
+            break;
         case (typeof req.query.title == "string"):
             console.log(`Fetching movies containing by ${req.query.title}`);
             break;
