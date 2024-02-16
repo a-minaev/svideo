@@ -120,7 +120,7 @@ const checkQueryParams = (req, res, next) => {
     switch(true){
         case (typeof(req.query.title)=='string' && 
               typeof(req.query.director)=='string' &&
-              (typeof(req.query.year)=='number'||'string')):
+              typeof(req.query.year)=='string'):
             console.log(`The following query params were specified: ${req.query.title}, ${req.query.director}, and ${req.query.year}`);
             break;
         case !req.query.title && !req.query.year:
