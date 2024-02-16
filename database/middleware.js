@@ -115,24 +115,36 @@ const checkID = (req, res, next) => {
 }
 
 const checkQueryParams = (req, res, next) => {
-    console.log(req.query.title);
-    console.log(typeof(req.query.year));
     switch(true){
         case (typeof(req.query.title)=='string' && 
               typeof(req.query.director)=='string' &&
               typeof(req.query.year)=='string'):
+            
+            req.hasTitle = true;
+            req.hasDirector = true;
+            req.hasYear = true;
+
             console.log(`The following query params were specified: ${req.query.title}, ${req.query.director}, and ${req.query.year}`);
             break;
         case !req.query.title && !req.query.year:
+            req.hasDirector = true;
+
             console.log(`Fetching movies directed by ${req.query.director}`);
             break;
         case !req.query.title && !req.query.director:
+            req.hasYear = true;
+
             console.log(`Fetching movies released in ${req.query.year}`);
             break;
         case !req.query.title:
+            req.hasDirector = true;
+            req.hasYear = true;
+
             console.log(`Fetching movies by ${req.query.director} released in ${req.query.year}`);
             break;
         case (typeof req.query.title == "string"):
+            req.hasTitle = true;
+            
             console.log(`Fetching movies containing by ${req.query.title}`);
             break;
         default:
