@@ -114,6 +114,26 @@ const checkID = (req, res, next) => {
     }
 }
 
+const checkQueryParams = (req, res, next) => {
+    switch(true){
+        case req.query.title && req.query.director && req.query.year:
+            console.log(`The following query params were specified: ${req.query.title}, ${req.query.director}, and ${req.query.year}`);
+            break;
+        case !req.query.title && !req.query.year:
+            console.log(`Fetching movies directed by ${req.query.director}`);
+            break;
+        case !req.query.title && !req.query.director:
+            console.log(`Fetching movies released in ${req.query.year}`);
+            break;
+        case req.query.title:
+            console.log(`Fetching movies containing by ${req.query.title}`);
+            break;
+        default:
+            console.log('Fetching the Top Ten Rated Movies');
+    }
+    next();
+}
+
 
 const parseListByTitle = (title) => {
     var returnMovie = {};
@@ -140,5 +160,6 @@ module.exports = {
     returnMovieByID,
     checkTitle,
     checkID,
-    addMovie
+    addMovie,
+    checkQueryParams
 };

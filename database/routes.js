@@ -6,7 +6,8 @@ const {
     returnMovieByID,
     checkTitle,
     checkID,
-    addMovie
+    addMovie,
+    checkQueryParams
 } = require('./middleware');
 
 database.param('id', (req, res, next, id) => {
