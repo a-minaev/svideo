@@ -20,7 +20,7 @@ database.param('id', (req, res, next, id) => {
 })
 
 
-database.get('/movies', checkQueryParams, (req, res, next) => { //will use returnMovies
+database.get('/movies', checkQueryParams, returnMovies, (req, res, next) => { //will use returnMovies
     res.status(200).send('Movie List is in development, check back soon!');
 })
 
