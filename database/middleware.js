@@ -67,42 +67,43 @@ const returnMovies = (req, res, next) => {
         case(req.hasTitle && req.hasYear):
             console.log('parse by year and title');
 
-            movieTitles = parseListByTitle(parseListByYear(movieList,2023),'Barbie');
+            movieTitles = parseListByTitle(parseListByYear(movieList,req.query.year), req.query.title);
             res.status(200).send(movieTitles);
             break;
 
         case(req.hasYear && req.hasDirector):
             console.log('parse by director and year');
 
-            movieTitles = parseListByYear(parseListByDirector(movieList, 'Greta Gerwig'), 2023);
+            movieTitles = parseListByYear(parseListByDirector(movieList, req.query.director), req.query.year);
             res.status(200).send(movieTitles);
             break;
 
         case(req.hasTitle && req.hasDirector):
             console.log('parse by director and year');
 
-            movieTitles = parseListByTitle(parseListByDirector(movieList, 'Greta Gerwig'), 'Barbie');
+            movieTitles = parseListByTitle(parseListByDirector(movieList, req.query.director), req.query.title);
             res.status(200).send(movieTitles);
             break;
 
         case(req.hasDirector):
             console.log('parse by director');
 
-            movieTitles = parseListByDirector(movieList, 'Greta Gerwig');
+            movieTitles = parseListByDirector(movieList, req.query.director);
             res.status(200).send(movieTitles);
             break;
 
         case(req.hasYear):
             console.log('parse by year');
 
-            movieTitles = parseListByDirector(movieList, 'Greta Gerwig');
+            movieTitles = parseListByYear(movieList, req.query.year);
             res.status(200).send(movieTitles);
             break;
 
         default:
             console.log('parsing by title');
 
-            res.status(200).send(movieList);
+            movieTitles = parseListByTitle(movieList, req.query.title);
+            res.status(200).send(movieTitles);
     }
 }
 
