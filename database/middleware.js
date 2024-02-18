@@ -194,6 +194,19 @@ const parseListByDirector = (listToParse, director) => {
     return returnList;
 };
 
+const parseListByYear = (listToParse, year) => {
+    var returnMovie = {};
+    const returnList = [];
+
+    listToParse.forEach((movie) => {
+        if(movie.year == year) {
+            returnMovie = movie;
+            returnList.push(returnMovie);
+        }
+    })
+    return returnList;
+};
+
 
 
 
