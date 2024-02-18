@@ -118,20 +118,6 @@ const addMovie = (req,res,next) => {
 
 
 //Helpers
-const checkTitle = (req, res, next) => {
-    console.log('!!Running checkTitle()!!');
-    var validTitle = false;
-    const movieIsInList = movieList.forEach((movie) => {if(movie.title == req.query.title) {
-        validTitle = true; 
-    }});
-    if(validTitle){
-        next();
-
-    } else {
-        const error = new Error(`${req.query.title} is not a valid Title`);
-        next(error);
-    }
-};
 
 const checkID = (req, res, next) => {
     console.log(movieList[req.id])
@@ -183,15 +169,29 @@ const checkQueryParams = (req, res, next) => {
 }
 
 
-const parseListByTitle = (title) => {
+const parseListByTitle = (listToParse, title) => {
     var returnMovie = {};
+    const returnList = [];
 
-    movieList.forEach((movie) => {
+    listToParse.forEach((movie) => {
         if(movie.title == title) {
             returnMovie = movie;
+            returnList.push(returnMovie);
         }
     })
-    return returnMovie;
+    return returnList;
+};
+const parseListByDirector = (listToParse, director) => {
+    var returnMovie = {};
+    const returnList = [];
+
+    listToParse.forEach((movie) => {
+        if(movie.director == director) {
+            returnMovie = movie;
+            returnList.push(returnMovie);
+        }
+    })
+    return returnList;
 };
 
 
@@ -206,7 +206,6 @@ module.exports = {
     returnMovies, 
     returnMovieByTitle,
     returnMovieByID,
-    checkTitle,
     checkID,
     addMovie,
     checkQueryParams

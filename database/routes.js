@@ -28,10 +28,6 @@ database.get('/movie/:id', checkID, returnMovieByID, (req, res, next) => {
     res.status(200).send(`Sorry, we're having trouble locating the current title`);
 })
 
-database.get('/find', checkTitle, returnMovieByTitle, (req, res, next) => { //will be used to handle query params
-    res.status(200).send(`We'll find some movies for ya`);
-})
-
 database.post('/movie', addMovie, (req, res, next) => {
     res.status(201).send('Posted!');
 })
