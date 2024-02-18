@@ -57,6 +57,35 @@ console.log(movieList);
 //GET Middleware
 const returnMovies = (req, res, next) => {
     const movieTitles = [];
+
+    switch(true){
+        case(!req.hasTitle && !req.hasDirector && !req.hasYear):
+            console.log('Return top 10 movies');
+            break;
+
+        case(req.hasTitle && req.hasYear):
+            console.log('parse by year and title');
+            break;
+
+        case(req.hasYear && req.hasDirector):
+            console.log('parse by director and year');
+            break;
+
+        case(req.hasTitle && req.hasDirector):
+            console.log('parse by director and year');
+            break;
+
+        case(req.hasDirector):
+            console.log('parse by director');
+            break;
+
+        case(req.hasYear):
+            console.log('parse by year');
+            break;
+
+        default:
+            console.log('parsing by title');
+    }
     movieList.forEach((movie) => movieTitles.push(movie.title));
     console.log(movieTitles);
     //res.status(200).send(movieTitles);
