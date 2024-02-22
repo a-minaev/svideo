@@ -56,12 +56,57 @@ console.log(movieList);
 
 //GET Middleware
 const returnMovies = (req, res, next) => {
-    const movieTitles = [];
-    movieList.forEach((movie) => movieTitles.push(movie.title));
-    console.log(movieTitles);
-    //res.status(200).send(movieTitles);
+    var movieTitles = [];
+
+    switch(true){
+        case(!req.hasTitle && !req.hasDirector && !req.hasYear):
+            console.log('Return top 10 movies');
+            res.status(200).send(movieList);
+            break;
+
+        case(req.hasTitle && req.hasYear):
+            console.log('parse by year and title');
+
+            movieTitles = parseListByTitle(parseListByYear(movieList,req.query.year), req.query.title);
+            res.status(200).send(movieTitles);
+            break;
+
+        case(req.hasYear && req.hasDirector):
+            console.log('parse by director and year');
+
+            movieTitles = parseListByYear(parseListByDirector(movieList, req.query.director), req.query.year);
+            res.status(200).send(movieTitles);
+            break;
+
+        case(req.hasTitle && req.hasDirector):
+            console.log('parse by director and year');
+
+            movieTitles = parseListByTitle(parseListByDirector(movieList, req.query.director), req.query.title);
+            res.status(200).send(movieTitles);
+            break;
+
+        case(req.hasDirector):
+            console.log('parse by director');
+
+            movieTitles = parseListByDirector(movieList, req.query.director);
+            res.status(200).send(movieTitles);
+            break;
+
+        case(req.hasYear):
+            console.log('parse by year');
+
+            movieTitles = parseListByYear(movieList, req.query.year);
+            res.status(200).send(movieTitles);
+            break;
+
+        default:
+            console.log('parsing by title');
+
+            movieTitles = parseListByTitle(movieList, req.query.title);
+            res.status(200).send(movieTitles);
+    }
 }
-returnMovies(20, 20, 20);
+
 const returnMovieByTitle = (req, res, next) => {
     const returnMovie = parseListByTitle(req.body.title);
     res.status(200).send(returnMovie);
@@ -89,20 +134,6 @@ const addMovie = (req,res,next) => {
 
 
 //Helpers
-const checkTitle = (req, res, next) => {
-    console.log('!!Running checkTitle()!!');
-    var validTitle = false;
-    const movieIsInList = movieList.forEach((movie) => {if(movie.title == req.query.title) {
-        validTitle = true; 
-    }});
-    if(validTitle){
-        next();
-
-    } else {
-        const error = new Error(`${req.query.title} is not a valid Title`);
-        next(error);
-    }
-};
 
 const checkID = (req, res, next) => {
     console.log(movieList[req.id])
@@ -114,16 +145,82 @@ const checkID = (req, res, next) => {
     }
 }
 
+const checkQueryParams = (req, res, next) => {
+    switch(true){
+        case (typeof(req.query.title)=='string' && 
+              typeof(req.query.director)=='string' &&
+              typeof(req.query.year)=='string'):
+            
+            req.hasTitle = true;
+            req.hasDirector = true;
+            req.hasYear = true;
 
-const parseListByTitle = (title) => {
+            console.log(`The following query params were specified: ${req.query.title}, ${req.query.director}, and ${req.query.year}`);
+            break;
+        case !req.query.title && !req.query.year:
+            req.hasDirector = true;
+
+            console.log(`Fetching movies directed by ${req.query.director}`);
+            break;
+        case !req.query.title && !req.query.director:
+            req.hasYear = true;
+
+            console.log(`Fetching movies released in ${req.query.year}`);
+            break;
+        case !req.query.title:
+            req.hasDirector = true;
+            req.hasYear = true;
+
+            console.log(`Fetching movies by ${req.query.director} released in ${req.query.year}`);
+            break;
+        case (typeof req.query.title == "string"):
+            req.hasTitle = true;
+            
+            console.log(`Fetching movies containing by ${req.query.title}`);
+            break;
+        default:
+            console.log('Fetching the Top Ten Rated Movies');
+    }
+    next();
+}
+
+
+const parseListByTitle = (listToParse, title) => {
     var returnMovie = {};
+    const returnList = [];
 
-    movieList.forEach((movie) => {
+    listToParse.forEach((movie) => {
         if(movie.title == title) {
             returnMovie = movie;
+            returnList.push(returnMovie);
         }
     })
-    return returnMovie;
+    return returnList;
+};
+const parseListByDirector = (listToParse, director) => {
+    var returnMovie = {};
+    const returnList = [];
+
+    listToParse.forEach((movie) => {
+        if(movie.director == director) {
+            returnMovie = movie;
+            returnList.push(returnMovie);
+        }
+    })
+    return returnList;
+};
+
+const parseListByYear = (listToParse, year) => {
+    var returnMovie = {};
+    const returnList = [];
+
+    listToParse.forEach((movie) => {
+        if(movie.year == year) {
+            returnMovie = movie;
+            returnList.push(returnMovie);
+        }
+    })
+    return returnList;
 };
 
 
@@ -138,7 +235,7 @@ module.exports = {
     returnMovies, 
     returnMovieByTitle,
     returnMovieByID,
-    checkTitle,
     checkID,
-    addMovie
+    addMovie,
+    checkQueryParams
 };

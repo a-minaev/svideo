@@ -6,7 +6,8 @@ const {
     returnMovieByID,
     checkTitle,
     checkID,
-    addMovie
+    addMovie,
+    checkQueryParams
 } = require('./middleware');
 
 database.param('id', (req, res, next, id) => {
@@ -19,16 +20,12 @@ database.param('id', (req, res, next, id) => {
 })
 
 
-database.get('/movies', returnMovies, (req, res, next) => { //will use returnMovies
+database.get('/movies', checkQueryParams, returnMovies, (req, res, next) => { //will use returnMovies
     res.status(200).send('Movie List is in development, check back soon!');
 })
 
 database.get('/movie/:id', checkID, returnMovieByID, (req, res, next) => {
     res.status(200).send(`Sorry, we're having trouble locating the current title`);
-})
-
-database.get('/find', checkTitle, returnMovieByTitle, (req, res, next) => { //will be used to handle query params
-    res.status(200).send(`We'll find some movies for ya`);
 })
 
 database.post('/movie', addMovie, (req, res, next) => {
