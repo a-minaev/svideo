@@ -76,3 +76,16 @@ const checkQueryParams = (req, res, next) => {
       case(req.query.title 
   }
 };
+
+// sanitize queries
+const sanitizeQuery = (input) => {
+  return new Promise((resolve, reject) => {
+    // verify is string, alphanumeric
+    // some titles contain special characters like ' : ; / 
+    if(true){
+      resolve(input);
+    } else {
+      reject('failed one of the criteria');
+    }
+  });
+};
