@@ -1,4 +1,4 @@
-const Movie = require('./init');
+import { Movie } from 'init.js';
 
 const findMovie = async(req, res, next) => {
   req.title = req.query.title;
@@ -114,6 +114,7 @@ const makeID = async () => {
     console.log(lastMovieID); 
     return; //return lastID incremented by 1
 }
-module.exports = { findMovie, addMovie };
 
 makeID();
+
+export{ findMovie, addMovie };

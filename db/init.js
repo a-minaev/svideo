@@ -34,4 +34,4 @@ const Movie = sequelize.define('Movie', {
 })
 
 sequelize.close();
-module.exports = Movie; 
+export{ Movie }; 
