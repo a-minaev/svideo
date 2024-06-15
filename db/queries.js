@@ -1,4 +1,4 @@
-import { Movie } from 'init.js';
+import { Movie } from './init.js';
 
 const findMovie = async(req, res, next) => {
   req.title = req.query.title;
@@ -108,7 +108,7 @@ const sanitizeQuery = (input) => {
 const makeID = async () => {
     const lastMovieID = await Movie.findAll({
         attributes: ['id'],
-        order: ['id', 'DESC']
+        order: [['id', 'DESC']]
     })
 
     console.log(lastMovieID); 

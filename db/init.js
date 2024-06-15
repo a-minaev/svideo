@@ -12,7 +12,7 @@ try {
     console.error('Unable to connect :(');
 };
 
-const Movie = sequelize.define('Movie', {
+const Movie = sequelize.define('movie', {
     //model attributes (column names)
     id: {
         type: DataTypes.INTEGER,
@@ -33,5 +33,4 @@ const Movie = sequelize.define('Movie', {
 
 })
 
-sequelize.close();
 export{ Movie }; 
