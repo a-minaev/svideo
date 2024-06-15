@@ -7,7 +7,7 @@ const findMovie = async(req, res, next) => {
 
   switch(true) {
       
-      case(req.title && req.director && req.year):
+      case(typeof(req.title && req.director && req.year) == 'string'):
         const movie = await Movie.findAll({
           where: {
             title: req.title,
@@ -15,51 +15,58 @@ const findMovie = async(req, res, next) => {
             year: req.year
           }
         });
+        break;
 
-      case(req.title && req.director):
+      case(typeof(req.title && req.director)) == 'string':
         const movie = await Movie.findAll({
           where: {
             title : req.title,
             director : req.director
           }
         });
+        break;
 
-      case(req.title && req.year):
+      case(typeof(req.title && req.year)):
         const movie = await Movie.findAll({
           where: {
             title: req.title,
             year: req.year
           }
         });
+        break;
 
-      case(req.director && req.year):
+      case(typeof(req.director && req.year)):
         const movie = await Movie.findAll({
           where: {
             director: req.director,
             year: req.year
           }
         });
+        break;
 
-      case(req.title):
+      case(typeof(req.title) == 'string'):
         const movie = await Movie.findAll({
           where: {
             title: req.title
           }
         });
+        break;
 
-      case(req.director):
+      case(typeof(req.director)) == 'string':
         const movie = await Movie.findAll({
           where: {
             director: req.director
           }
         });
+        break;
 
-      case(req.year):
+      case(typeof(req.year)) == 'string':
         const movie = await Movie.findAll({
           where: {
             year: req.year
           }
         });
+        break;
 
     default:
         const movie = await Movie.findAll({
@@ -69,11 +76,25 @@ const findMovie = async(req, res, next) => {
 
   next();
 };
+const addMovie = async(req, res, next) => {
+    const req.id = makeID(); // 
+    const req.title = req.query.title;
+    const req.director = req.query.director;
+    const req.year = req.query.year;
 
+    const movie = await Movie.create({
+        id: req.id,
+        title : req.title,
+        director : req. director,
+        year: req.year;
+    })
+    console.log(`Successfully created the movie: ${movie.title}`)
+    next();
+}
 // reduntant; can create three variables and execute as neededin findMovie
 const checkQueryParams = (req, res, next) => {
   switch(true) {
-      case(req.query.title 
+      case(req.query.title):
   }
 };
 
@@ -89,3 +110,14 @@ const sanitizeQuery = (input) => {
     }
   });
 };
+
+const makeID = async () => {
+    const lastMovieID = await Movie.findAll({
+        attributes: ['id'],
+        order: ['id', 'DESC']
+    })
+
+    console.log(lastMovieID); 
+    return(); //return lastID incremented by 1
+}
+module.exports = { findMovie, addMovie };
