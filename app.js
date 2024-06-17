@@ -1,13 +1,13 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const cors = require('cors');
+import express from 'express';
+import bodyParser from'body-parser';
+import cors from 'cors';
 const app = express();
-const database = require('./database/routes');
+const db = require('./db/routes');
 
 const PORT = process.env.PORT || 4001;
 app.use(cors());
 app.use(bodyParser.json());
-app.use('/', database);
+app.use('/', db);
 
 app.use((err,req, res, next) => {
     if(!err.status) {
