@@ -1,7 +1,8 @@
-import { express } from 'express';
-import { cors } from 'cors';
+import express from 'express';
+import cors from 'cors';
+
 const app = express();
-const db = require('./db/routes');
+import { db } from('./db/routes');
 
 const PORT = process.env.PORT || 4001;
 app.use(cors());

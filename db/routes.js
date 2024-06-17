@@ -1,4 +1,4 @@
-import { express } from 'express';
+import express from 'express';
 const db = express.Router();
 
 db.param('id', (req, res, next, id) => {
