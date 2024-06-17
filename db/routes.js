@@ -1,4 +1,4 @@
-const express = require('express');
+import { express } from 'express';
 const db = express.Router();
 
 db.param('id', (req, res, next, id) => {
@@ -18,3 +18,5 @@ db.get('/movies/:id', (req, res, next) => {
 db.post('/movies', (req, res, next) => {
   res.status(201).send("Your movie has been added");
 });
+
+export { db };
