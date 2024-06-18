@@ -1,4 +1,5 @@
 import { Movie } from './init.js';
+import { Op } from 'sequelize';
 
 const findMovie = async(req, res, next) => {
   let movie = undefined;
@@ -12,8 +13,8 @@ const findMovie = async(req, res, next) => {
         movie = await Movie.findAll({
           attributes: {exclude: ['createdAt', 'updatedAt']},
           where: {
-            title: req.title,
-            director: req.director,
+            title: {[Op.substring]: req.title},
+            director: {[Op.substring]: req.director},
             year: req.year
           }
         });
@@ -23,8 +24,8 @@ const findMovie = async(req, res, next) => {
         movie = await Movie.findAll({
           attributes: {exclude: ['createdAt', 'updatedAt']},
           where: {
-            title : req.title,
-            director : req.director
+            title : {[Op.substring]: req.title},
+            director : {[Op.substring]: req.director}
           }
         });
         break;
@@ -33,7 +34,7 @@ const findMovie = async(req, res, next) => {
         movie = await Movie.findAll({
           attributes: {exclude: ['createdAt', 'updatedAt']},
           where: {
-            title: req.title,
+            title: {[Op.substring]: req.title},
             year: req.year
           }
         });
@@ -43,7 +44,7 @@ const findMovie = async(req, res, next) => {
         movie = await Movie.findAll({
           attributes: {exclude: ['createdAt', 'updatedAt']},
           where: {
-            director: req.director,
+            director: {[Op.substring]: req.director},
             year: req.year
           }
         });
@@ -53,7 +54,7 @@ const findMovie = async(req, res, next) => {
         movie = await Movie.findAll({
           attributes: {exclude: ['createdAt', 'updatedAt']},
           where: {
-            title: req.title
+            title: {[Op.substring]: req.title}
           }
         });
         break;
@@ -62,7 +63,7 @@ const findMovie = async(req, res, next) => {
         movie = await Movie.findAll({
           attributes: {exclude: ['createdAt', 'updatedAt']},
           where: {
-            director: req.director
+            director: {[Op.substring]: req.director}
           }
         });
         break;
