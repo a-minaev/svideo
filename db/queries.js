@@ -1,6 +1,7 @@
 import { Movie } from './init.js';
 
 const findMovie = async(req, res, next) => {
+  let movie = undefined;
   req.title = req.query.title;
   req.director = req.query.director;
   req.year = req.query.year;
@@ -8,7 +9,8 @@ const findMovie = async(req, res, next) => {
   switch(true) {
       
       case(typeof(req.title && req.director && req.year) == 'string'):
-        let movie = await Movie.findAll({
+        movie = await Movie.findAll({
+          attributes: {exclude: ['createdAt', 'updatedAt']},
           where: {
             title: req.title,
             director: req.director,
@@ -19,6 +21,7 @@ const findMovie = async(req, res, next) => {
 
       case(typeof(req.title && req.director)) == 'string':
         movie = await Movie.findAll({
+          attributes: {exclude: ['createdAt', 'updatedAt']},
           where: {
             title : req.title,
             director : req.director
@@ -28,6 +31,7 @@ const findMovie = async(req, res, next) => {
 
       case(typeof(req.title && req.year)):
         movie = await Movie.findAll({
+          attributes: {exclude: ['createdAt', 'updatedAt']},
           where: {
             title: req.title,
             year: req.year
@@ -37,6 +41,7 @@ const findMovie = async(req, res, next) => {
 
       case(typeof(req.director && req.year)):
         movie = await Movie.findAll({
+          attributes: {exclude: ['createdAt', 'updatedAt']},
           where: {
             director: req.director,
             year: req.year
@@ -46,22 +51,25 @@ const findMovie = async(req, res, next) => {
 
       case(typeof(req.title) == 'string'):
         movie = await Movie.findAll({
+          attributes: {exclude: ['createdAt', 'updatedAt']},
           where: {
             title: req.title
           }
         });
         break;
 
-      case(typeof(req.director)) == 'string':
+      case(typeof(req.director) == 'string'):
         movie = await Movie.findAll({
+          attributes: {exclude: ['createdAt', 'updatedAt']},
           where: {
             director: req.director
           }
         });
         break;
 
-      case(typeof(req.year)) == 'string':
+      case(typeof(req.year) == 'string'):
         movie = await Movie.findAll({
+          attributes: {exclude: ['createdAt', 'updatedAt']},
           where: {
             year: req.year
           }
@@ -70,10 +78,12 @@ const findMovie = async(req, res, next) => {
 
     default:
         movie = await Movie.findAll({
+          attributes: {exclude: ['createdAt', 'updatedAt']},
           
         });
   }
 
+  movie.forEach(movie => {console.log(movie.get('title'))});
   next();
 };
 const addMovie = async(req, res, next) => {
@@ -115,6 +125,6 @@ const makeID = async () => {
     return; //return lastID incremented by 1
 }
 
-makeID();
+// makeID();
 
 export{ findMovie, addMovie };
