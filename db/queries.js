@@ -16,7 +16,8 @@ const findMovie = async(req, res, next) => {
             title: {[Op.substring]: req.title},
             director: {[Op.substring]: req.director},
             year: req.year
-          }
+          },
+          order: [['year', 'DESC']]
         });
         break;
 
@@ -26,7 +27,8 @@ const findMovie = async(req, res, next) => {
           where: {
             title : {[Op.substring]: req.title},
             director : {[Op.substring]: req.director}
-          }
+          },
+          order: [['year', 'DESC']]
         });
         break;
 
@@ -36,7 +38,8 @@ const findMovie = async(req, res, next) => {
           where: {
             title: {[Op.substring]: req.title},
             year: req.year
-          }
+          },
+          order: [['year', 'DESC']]
         });
         break;
 
@@ -46,7 +49,8 @@ const findMovie = async(req, res, next) => {
           where: {
             director: {[Op.substring]: req.director},
             year: req.year
-          }
+          },
+          order: [['year', 'DESC']]
         });
         break;
 
@@ -55,7 +59,8 @@ const findMovie = async(req, res, next) => {
           attributes: {exclude: ['createdAt', 'updatedAt']},
           where: {
             title: {[Op.substring]: req.title}
-          }
+          },
+          order: [['year', 'DESC']]
         });
         break;
 
@@ -64,7 +69,8 @@ const findMovie = async(req, res, next) => {
           attributes: {exclude: ['createdAt', 'updatedAt']},
           where: {
             director: {[Op.substring]: req.director}
-          }
+          },
+          order: [['year', 'DESC']]
         });
         break;
 
@@ -73,14 +79,15 @@ const findMovie = async(req, res, next) => {
           attributes: {exclude: ['createdAt', 'updatedAt']},
           where: {
             year: req.year
-          }
+          },
+          order: [['year', 'DESC']]
         });
         break;
 
     default:
         movie = await Movie.findAll({
           attributes: {exclude: ['createdAt', 'updatedAt']},
-          
+          order: [['year', 'DESC']]
         });
   }
 
