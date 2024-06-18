@@ -1,7 +1,7 @@
 import { Movie } from './init.js';
 import { Op } from 'sequelize';
 
-const findMovie = async(req, res, next) => {
+const findMovies = async(req, res, next) => {
   let movie = undefined;
   req.title = req.query.title;
   req.director = req.query.director;
@@ -135,4 +135,4 @@ const makeID = async () => {
 
 // makeID();
 
-export{ findMovie, addMovie };
+export{ findMovies, addMovie };

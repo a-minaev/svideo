@@ -1,4 +1,4 @@
-import { findMovie, addMovie } from '../db/queries.js';
+import { findMovies, addMovie } from '../db/queries.js';
 
 let req = {
     query: {
@@ -10,4 +10,4 @@ let req = {
 
 let res = {};
 
-findMovie(req);
+findMovies(req);
