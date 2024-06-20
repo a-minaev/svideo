@@ -10,4 +10,4 @@ let req = {
 
 let res = {};
 
-findMovies(req);
+findMovies(req, res);

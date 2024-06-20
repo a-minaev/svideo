@@ -91,8 +91,10 @@ const findMovies = async(req, res, next) => {
         });
   }
 
-  movie.forEach(movie => {console.log(movie.get('title'))});
-  next();
+  res.movie = movie.map((obj)=>obj.dataValues);
+  res.movie.forEach(movie => {console.log(movie.title, movie.year, movie.genre)});
+  console.log(res.movie);
+  //next();
 };
 const addMovie = async(req, res, next) => {
     req.id = makeID(); // 
