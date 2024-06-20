@@ -1,4 +1,5 @@
 import express from 'express';
+import { findMovies, addMovie } from './queries.js';
 const db = express.Router();
 
 db.param('id', (req, res, next, id) => {
@@ -7,15 +8,15 @@ db.param('id', (req, res, next, id) => {
   next();
 });
 
-db.get('/movies', (req, res, next) => {
+db.get('/movies', findMovies(), (req, res, next) => {
   res.status(200).send("Here's your movies");
 });
 
-db.get('/movies/:id', (req, res, next) => {
+db.get('/movies/:id', findMovies(), (req, res, next) => {
   res.status(200).send("Here's your specific movie");
 });
 
-db.post('/movies', (req, res, next) => {
+db.post('/movies', addMovie(), (req, res, next) => {
   res.status(201).send("Your movie has been added");
 });
 
